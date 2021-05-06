@@ -1,0 +1,80 @@
+{
+    "name": "react-column-view",
+    "version": "0.0.1",
+    "description": "A React library for creating a customizable column/tree view explorer component",
+    "keywords": [
+        "react",
+        "tree",
+        "explorer",
+        "column-view",
+        "view"
+    ],
+    "author": "Riccardo Caranfil",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "module": "dist/index.es.js",
+    "jsnext:main": "dist/index.es.js",
+    "files": [
+        "dist"
+    ],
+    "engines": {
+        "node": ">=8",
+        "npm": ">=5"
+    },
+    "scripts": {
+        "test": "react-scripts test",
+        "coverage": "CI=true npm test -- --coverage",
+        "build": "rollup -c",
+        "start": "rollup -c -w",
+        "prepare": "yarn run build",
+        "predeploy": "cd example && yarn install && yarn run build"
+    },
+    "dependencies": {
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
+    },
+    "peerDependencies": {
+        "react": ">=17.0.1",
+        "react-dom": ">=17.0.1"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^11.0.0",
+        "@commitlint/config-conventional": "^11.0.0",
+        "@rollup/plugin-commonjs": "^15.1.0",
+        "@rollup/plugin-node-resolve": "^9.0.0",
+        "@rollup/plugin-url": "^5.0.1",
+        "@semantic-release/changelog": "^5.0.1",
+        "@semantic-release/commit-analyzer": "^8.0.1",
+        "@semantic-release/git": "^9.0.0",
+        "@semantic-release/gitlab": "^6.0.5",
+        "@semantic-release/release-notes-generator": "^9.0.1",
+        "@svgr/rollup": "^5.4.0",
+        "@types/jest": "^26.0.15",
+        "@types/react": "^16.9.53",
+        "@types/react-dom": "^16.9.8",
+        "babel-core": "^6.26.3",
+        "babel-runtime": "^6.26.0",
+        "husky": "^4.3.0",
+        "lint-staged": "^10.4.2",
+        "prettier": "^2.1.2",
+        "react-scripts": "4.0.0",
+        "rollup": "^2.32.1",
+        "rollup-plugin-babel": "^4.4.0",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-postcss": "^3.1.8",
+        "rollup-plugin-typescript2": "^0.28.0",
+        "semantic-release": "^17.2.1",
+        "typescript": "~4.0.3"
+    },
+    "lint-staged": {
+        "*.{ts,tsx,js,jsx,json,css,html,md,yml}": [
+            "prettier --write"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
+    }
+}
