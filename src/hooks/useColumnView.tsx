@@ -25,10 +25,10 @@ function useColumnView<T extends { id: string }>(props?: UseColumnViewProps<T>) 
     );
 
     const insert = (item: T, parentId?: string) => dispatch({ type: "insert", item, parentId });
-    // const setOn = () => dispatch({type: 'ON'})
-    // const setOff = () => dispatch({type: 'OFF'})
+    const push = (item: string) => dispatch({ type: "push", item });
+    const pop = (item: string) => dispatch({ type: "pop", item });
 
-    return { root, path, data, insert };
+    return { root, path, data, insert, push, pop };
 }
 
 export default useColumnView;

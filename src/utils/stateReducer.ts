@@ -19,6 +19,17 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
                     .map((i) => i.id),
                 data,
             };
+        case "push":
+            return {
+                ...state,
+                path: [...state.path, action.item],
+            };
+        case "pop":
+            state.path.pop();
+            return {
+                ...state,
+                path: [...state.path],
+            };
         default:
             return state;
     }
