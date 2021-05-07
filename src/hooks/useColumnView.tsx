@@ -19,16 +19,16 @@ type UseColumnViewProps<T> = {
 };
 
 function useColumnView<T extends { id: string }>(props?: UseColumnViewProps<T>) {
-    const [{ path, data }, dispatch] = useReducer(
+    const [{ root, data, path }, dispatch] = useReducer(
         stateReducer,
         props?.initialState || INITIAL_STATE
     );
 
-    const insert = (item: T) => dispatch({ type: "insert", item });
+    const insert = (item: T, parentId?: string) => dispatch({ type: "insert", item, parentId });
     // const setOn = () => dispatch({type: 'ON'})
     // const setOff = () => dispatch({type: 'OFF'})
 
-    return { path, data, insert };
+    return { root, path, data, insert };
 }
 
 export default useColumnView;

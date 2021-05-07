@@ -18,8 +18,9 @@ declare module "*.svg" {
 
 declare module "react-column-view" {
     type State<T = {}> = {
-        path: T[];
-        data?: Record<string, T>;
+        path: ColumnItem<T>[];
+        root?: string[];
+        data?: Record<string, ColumnItem<T>>;
     };
 
     // type State =
@@ -28,8 +29,15 @@ declare module "react-column-view" {
     //     | { status: 'error', error: string }
     //     | { status: 'success', data: HNResponse }
 
+    type ColumnItem<T> = {
+        id: string;
+        parentId?: string;
+        children: string[];
+        data: T;
+    };
+
     type Action<T> =
-        | { type: "insert"; item: T }
+        | { type: "insert"; item: T; parentId?: string }
         | { type: "success"; results: any }
         | { type: "failure"; error: string };
 }

@@ -7,7 +7,7 @@ type Item = {
 };
 
 function App() {
-    const { path, insert, data } = useColumnView<Item>();
+    const { insert, root, path, data } = useColumnView<Item>();
 
     return (
         <div>
@@ -19,10 +19,17 @@ function App() {
                     })
                 }
             >
-                {" "}
-                Add item
+                Add root item
             </button>
-            <pre>{JSON.stringify({ path, data }, null, 2)}</pre>
+            <div>
+                {root?.map((item, index) => (
+                    <button>
+                        {data?.[item].data.name} {index}
+                    </button>
+                ))}
+            </div>
+
+            <pre>{JSON.stringify({ path, root, data }, null, 2)}</pre>
         </div>
     );
 }
