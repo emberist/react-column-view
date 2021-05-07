@@ -1,7 +1,7 @@
-import ExampleComponent from "./";
+import useColumnView from "./hooks/useColumnView";
 
 describe("ExampleComponent", () => {
     it("is truthy", () => {
-        expect(ExampleComponent).toBeTruthy();
+        expect(useColumnView).toBeTruthy();
     });
 });

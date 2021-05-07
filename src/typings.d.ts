@@ -15,3 +15,21 @@ declare module "*.svg" {
     export default svgUrl;
     export { svgComponent as ReactComponent };
 }
+
+declare module "react-column-view" {
+    type State<T = {}> = {
+        path: T[];
+        data?: Record<string, T>;
+    };
+
+    // type State =
+    //     | { status: 'empty' }
+    //     | { status: 'loading' }
+    //     | { status: 'error', error: string }
+    //     | { status: 'success', data: HNResponse }
+
+    type Action<T> =
+        | { type: "insert"; item: T }
+        | { type: "success"; results: any }
+        | { type: "failure"; error: string };
+}

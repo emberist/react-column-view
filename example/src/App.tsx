@@ -1,8 +1,30 @@
 import React from "react";
-import ExampleComponent from "react-column-view";
+import { useColumnView } from "react-column-view";
+
+type Item = {
+    id: string;
+    name: string;
+};
 
 function App() {
-    return <ExampleComponent text="Booh" />;
+    const { path, insert, data } = useColumnView<Item>();
+
+    return (
+        <div>
+            <button
+                onClick={() =>
+                    insert({
+                        id: Math.random() + "",
+                        name: "Ciao",
+                    })
+                }
+            >
+                {" "}
+                Add item
+            </button>
+            <pre>{JSON.stringify({ path, data }, null, 2)}</pre>
+        </div>
+    );
 }
 
 export default App;
