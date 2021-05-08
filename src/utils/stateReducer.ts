@@ -12,6 +12,12 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
                     data: action.item,
                 },
             };
+            if (action.parentId) {
+                data[action.parentId] = {
+                    ...data[action.parentId],
+                    children: [...data[action.parentId].children, action.item.id],
+                };
+            }
             return {
                 ...state,
                 root: Object.values(data || {})
@@ -20,9 +26,15 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
                 data,
             };
         case "push":
+            let p = state.path;
+            if (action.section !== undefined && p[action.section]) {
+                p[action.section] = action.item;
+            } else {
+                p.push(action.item);
+            }
             return {
                 ...state,
-                path: [...state.path, action.item],
+                path: [...p],
             };
         case "pop":
             state.path.pop();

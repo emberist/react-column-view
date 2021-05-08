@@ -23,9 +23,8 @@ function useColumnView<T extends { id: string }>(props?: UseColumnViewProps<T>) 
         stateReducer,
         props?.initialState || INITIAL_STATE
     );
-
     const insert = (item: T, parentId?: string) => dispatch({ type: "insert", item, parentId });
-    const push = (item: string) => dispatch({ type: "push", item });
+    const push = (item: string, section: number) => dispatch({ type: "push", item, section });
     const pop = (item: string) => dispatch({ type: "pop", item });
 
     return { root, path, data, insert, push, pop };

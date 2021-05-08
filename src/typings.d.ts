@@ -38,5 +38,5 @@ declare module "react-column-view" {
 
     type Action<T> =
         | { type: "insert"; item: T; parentId?: string }
-        | { type: "push" | "pop"; item: string };
+        | { type: "push" | "pop"; item: string; section?: number };
 }
