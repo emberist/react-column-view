@@ -12,6 +12,6 @@ export default class ExampleComponent extends React.Component<Props> {
     render() {
         const { text } = this.props;
 
-        return <div className={styles.test}>Example Component: {text}</div>;
+        return <div className={styles.test}>Ops Example Component: {text}</div>;
     }
 }
