@@ -1,48 +1,46 @@
 import classNames from "classnames";
-import React from "react";
+import React, { FC, HTMLAttributes } from "react";
 import { useColumnView } from "react-column-view";
 
 type Item = {
-    id: string;
+    id?: string;
     name: string;
 };
 
-function App() {
-    const { insert, root, path, push, data } = useColumnView<Item>();
-    const getItemChildren = () => [];
+const Section: FC<Pick<HTMLAttributes<HTMLButtonElement>, "onClick"> & { title: string }> = ({
+    children,
+    title,
+    onClick,
+}) => {
     return (
-        <div className={"md:container mx-auto"}>
-            <div className={"grid grid-cols-6 gap-x-2 my-2"}>
+        <div className="w-64 sm:w-52 border-2 rounded">
+            <div className={"p-2 bg-gray-100  items-center flex justify-between border-b-2"}>
+                <div className={""}>{title}</div>
                 <button
-                    className={"border-2"}
-                    onClick={() =>
-                        insert({
-                            id: Math.random() + "",
-                            name: "Ciao",
-                        })
+                    className={
+                        "px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
                     }
+                    onClick={onClick}
                 >
-                    Add root item
-                </button>
-
-                <button
-                    className={"border-2"}
-                    onClick={() =>
-                        insert(
-                            {
-                                id: Math.random() + "",
-                                name: "Ciao",
-                            },
-                            path[path.length - 1]
-                        )
-                    }
-                >
-                    Add item to {path[path.length - 1]}
+                    Add
                 </button>
             </div>
+            <div className={"overflow-auto divide-y-2"}>{children}</div>
+        </div>
+    );
+};
 
-            <div className={"grid grid-cols-3 gap-x-1"}>
-                <div className={"border-2 rounded divide-y-2"}>
+function App() {
+    const { insert, root, path, getChildren, push, data } = useColumnView<Item>();
+    return (
+        <div className={"md:container mx-auto my-2"}>
+            <div className={"flex overflow-auto gap-x-1"}>
+                <Section
+                    title={"Section 1"}
+                    onClick={() => {
+                        insert({ name: "Ciao" });
+                    }}
+                >
                     {root?.map((item, index) => (
                         <div
                             className={classNames("p-2 hover:bg-gray-100", {
@@ -55,27 +53,34 @@ function App() {
                             {data?.[item].data.name} {index}
                         </div>
                     ))}
-                </div>
+                </Section>
 
-                {path?.map((item, index) => (
-                    <div className="border-2 rounded divide-y-2" style={{ maxWidth: 250 }}>
-                        {getItemChildren().map((child) => (
-                            <div
-                                className={classNames("p-2 hover:bg-gray-100", {
-                                    "bg-gray-200": path.includes(item),
-                                })}
-                                onClick={() => {
-                                    push(item, index + 1);
-                                }}
-                            >
-                                {data?.[child].data.name} {index}
-                            </div>
-                        ))}
-                    </div>
+                {path?.map((item, sectionIndex) => (
+                    <Section
+                        title={"Section " + (sectionIndex + 2)}
+                        onClick={() => {
+                            insert({ name: "Child " + sectionIndex }, path[sectionIndex]);
+                        }}
+                    >
+                        {getChildren(item)?.map((child, index) => {
+                            return (
+                                <div
+                                    className={classNames("p-2 hover:bg-gray-100", {
+                                        "bg-gray-200": path.includes(child),
+                                    })}
+                                    onClick={() => push(child.id, sectionIndex + 1)}
+                                >
+                                    {data?.[child]?.data?.name} {index}
+                                </div>
+                            );
+                        })}
+                    </Section>
                 ))}
             </div>
 
-            <pre>{JSON.stringify({ path, root, data }, null, 2)}</pre>
+            <div className={"text-xs"}>
+                <pre>{JSON.stringify({ path, root, data }, null, 2)}</pre>
+            </div>
         </div>
     );
 }

@@ -18,16 +18,22 @@ type UseColumnViewProps<T> = {
     initialState?: State<T>;
 };
 
-function useColumnView<T extends { id: string }>(props?: UseColumnViewProps<T>) {
+function useColumnView<T>(props?: UseColumnViewProps<T>) {
     const [{ root, data, path }, dispatch] = useReducer(
         stateReducer,
         props?.initialState || INITIAL_STATE
     );
+
+    const getChildren = (id: string) => {
+        return data?.[id]?.children?.map((id) => data?.[id]);
+    };
+
+    //@ts-ignore
     const insert = (item: T, parentId?: string) => dispatch({ type: "insert", item, parentId });
     const push = (item: string, section: number) => dispatch({ type: "push", item, section });
     const pop = (item: string) => dispatch({ type: "pop", item });
 
-    return { root, path, data, insert, push, pop };
+    return { root, path, data, insert, push, pop, getChildren };
 }
 
 export default useColumnView;

@@ -1,21 +1,24 @@
 import { Action, State } from "react-column-view";
+import { v4 as uuid } from "uuid";
+import { omit } from "lodash";
 
 function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): State<T> {
     switch (action.type) {
         case "insert":
+            const id: string = action.item.id || uuid();
             const data = {
                 ...state.data,
-                [action.item.id]: {
+                [id]: {
+                    id,
                     children: [],
-                    id: action.item.id,
                     parentId: action.parentId,
-                    data: action.item,
+                    data: omit(action.item, "id") as T,
                 },
             };
             if (action.parentId) {
                 data[action.parentId] = {
                     ...data[action.parentId],
-                    children: [...data[action.parentId].children, action.item.id],
+                    children: [...data[action.parentId].children, id],
                 };
             }
             return {
@@ -26,9 +29,11 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
                 data,
             };
         case "push":
+            console.log("push", action);
             let p = state.path;
             if (action.section !== undefined && p[action.section]) {
-                p[action.section] = action.item;
+                p.splice(action.section, 1, action.item);
+                p.splice(action.section + 1, p.length - action.section);
             } else {
                 p.push(action.item);
             }

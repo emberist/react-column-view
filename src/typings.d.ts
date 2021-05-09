@@ -17,7 +17,7 @@ declare module "*.svg" {
 }
 
 declare module "react-column-view" {
-    type State<T = {}> = {
+    type State<T> = {
         path: string[];
         root?: string[];
         data?: Record<string, ColumnItem<T>>;

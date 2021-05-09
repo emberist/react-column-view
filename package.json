@@ -31,8 +31,10 @@
     },
     "dependencies": {
         "classnames": "^2.3.1",
+        "lodash": "^4.17.21",
         "react": "^17.0.2",
-        "react-dom": "^17.0.2"
+        "react-dom": "^17.0.2",
+        "uuid": "^8.3.2"
     },
     "peerDependencies": {
         "react": ">=17.0.1",
@@ -51,8 +53,10 @@
         "@semantic-release/release-notes-generator": "^9.0.1",
         "@svgr/rollup": "^5.4.0",
         "@types/jest": "^26.0.15",
+        "@types/lodash": "^4.14.168",
         "@types/react": "^16.9.53",
         "@types/react-dom": "^16.9.8",
+        "@types/uuid": "^8.3.0",
         "babel-core": "^6.26.3",
         "babel-runtime": "^6.26.0",
         "husky": "^4.3.0",
