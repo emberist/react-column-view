@@ -29,7 +29,6 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
                 data,
             };
         case "push":
-            console.log("push", action);
             let p = state.path;
             if (action.section !== undefined && p[action.section]) {
                 p.splice(action.section, 1, action.item);

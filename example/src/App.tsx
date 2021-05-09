@@ -13,7 +13,7 @@ const Section: FC<Pick<HTMLAttributes<HTMLButtonElement>, "onClick"> & { title: 
     onClick,
 }) => {
     return (
-        <div className="w-64 sm:w-52 border-2 rounded">
+        <div className="min-w-[250px] sm:w-52 border-2 rounded">
             <div className={"p-2 bg-gray-100  items-center flex justify-between border-b-2"}>
                 <div className={""}>{title}</div>
                 <button
@@ -59,18 +59,18 @@ function App() {
                     <Section
                         title={"Section " + (sectionIndex + 2)}
                         onClick={() => {
-                            insert({ name: "Child " + sectionIndex }, path[sectionIndex]);
+                            insert({ name: "Child " + (sectionIndex + 1) }, path[sectionIndex]);
                         }}
                     >
                         {getChildren(item)?.map((child, index) => {
                             return (
                                 <div
                                     className={classNames("p-2 hover:bg-gray-100", {
-                                        "bg-gray-200": path.includes(child),
+                                        "bg-gray-200": path.includes(child.id),
                                     })}
                                     onClick={() => push(child.id, sectionIndex + 1)}
                                 >
-                                    {data?.[child]?.data?.name} {index}
+                                    {data?.[child.id]?.data?.name}.{index}
                                 </div>
                             );
                         })}
