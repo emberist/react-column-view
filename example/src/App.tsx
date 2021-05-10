@@ -3,8 +3,10 @@ import ColumnView from "./components/ColumnView";
 
 function App() {
     return (
-        <div className={"md:container mx-auto my-2"}>
-            <ColumnView />
+        <div className={"bg-gray-600 h-screen w-screen flex justify-center"}>
+            <div className={"md:container flex justify-center items-center"}>
+                <ColumnView />
+            </div>
         </div>
     );
 }

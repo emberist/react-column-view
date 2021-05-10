@@ -11,7 +11,7 @@ type ColumnViewItem = {
 const ColumnView = () => {
     const { insert, root, path, getChildren, push, getItem } = useColumnView<ColumnViewItem>();
     return (
-        <div className={"flex overflow-auto gap-x-1"}>
+        <div className={"rounded-xl flex bg-white p-10 overflow-auto gap-x-1"}>
             <Section
                 title={"Section 1"}
                 onClick={() => {
@@ -53,9 +53,6 @@ const ColumnView = () => {
                     })}
                 </Section>
             ))}
-            <div className={"text-xs"}>
-                <pre>{JSON.stringify({ path, root }, null, 2)}</pre>
-            </div>
         </div>
     );
 };
