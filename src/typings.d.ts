@@ -23,12 +23,6 @@ declare module "react-column-view" {
         data?: Record<string, ColumnItem<T>>;
     };
 
-    // type State =
-    //     | { status: 'empty' }
-    //     | { status: 'loading' }
-    //     | { status: 'error', error: string }
-    //     | { status: 'success', data: HNResponse }
-
     type ColumnItem<T> = {
         id: string;
         parentId?: string;
@@ -40,8 +34,9 @@ declare module "react-column-view" {
         | { type: "insert"; item: T; parentId?: string }
         | { type: "push" | "pop"; item: string; section?: number };
 
-    type UseColumnViewHookProps<T> = {
-        initialState?: State<T>;
+    type UseColumnViewHookOptions<T> = {
+        path?: string[];
+        initialValues?: T[];
     };
 
     interface UseColumnViewHookResult<T> extends Omit<State<T>, "data"> {

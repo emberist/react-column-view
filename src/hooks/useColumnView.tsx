@@ -6,18 +6,19 @@
  */
 
 import { useCallback, useReducer } from "react";
-import { State, UseColumnViewHookProps, UseColumnViewHookResult } from "react-column-view";
+import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "react-column-view";
 import { compact } from "lodash";
 import stateReducer from "../utils/stateReducer";
+import { buildOptions } from "../utils/utils";
 
 const INITIAL_STATE: State<any> = {
     path: [],
 };
 
-function useColumnView<T>(props?: UseColumnViewHookProps<T>): UseColumnViewHookResult<T> {
+function useColumnView<T>(options?: UseColumnViewHookOptions<T>): UseColumnViewHookResult<T> {
     const [{ root, data, path }, dispatch] = useReducer(
         stateReducer,
-        props?.initialState || INITIAL_STATE
+        buildOptions(options) || INITIAL_STATE
     );
 
     const getChildren = useCallback(
