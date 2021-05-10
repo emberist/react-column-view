@@ -4,36 +4,55 @@
  *
  * Created by Riccardo Caranfil on 05/05/21
  */
-// import { useReducer } from "react";
-// import stateReducer from "../utils/stateReducer";
-import { State } from "react-column-view";
-import { useReducer } from "react";
+
+import { useCallback, useReducer } from "react";
+import { State, UseColumnViewHookProps, UseColumnViewHookResult } from "react-column-view";
+import { compact } from "lodash";
 import stateReducer from "../utils/stateReducer";
 
 const INITIAL_STATE: State<any> = {
     path: [],
 };
 
-type UseColumnViewProps<T> = {
-    initialState?: State<T>;
-};
-
-function useColumnView<T>(props?: UseColumnViewProps<T>) {
+function useColumnView<T>(props?: UseColumnViewHookProps<T>): UseColumnViewHookResult<T> {
     const [{ root, data, path }, dispatch] = useReducer(
         stateReducer,
         props?.initialState || INITIAL_STATE
     );
 
-    const getChildren = (id: string) => {
-        return data?.[id]?.children?.map((id) => data?.[id]);
-    };
+    const getChildren = useCallback(
+        (id: string) => {
+            return compact(data?.[id]?.children?.map((id) => data?.[id]));
+        },
+        [data]
+    );
+
+    const getItem = useCallback(
+        (id: string) => {
+            return data?.[id]?.data;
+        },
+        [data]
+    );
+
+    const insert = useCallback(
+        (item: T, parentId?: string) =>
+            dispatch({
+                type: "insert",
+                //@ts-ignore
+                item,
+                parentId,
+            }),
+        [dispatch]
+    );
+
+    const push = useCallback(
+        (item: string, section: number) => dispatch({ type: "push", item, section }),
+        [dispatch]
+    );
+    const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
 
     //@ts-ignore
-    const insert = (item: T, parentId?: string) => dispatch({ type: "insert", item, parentId });
-    const push = (item: string, section: number) => dispatch({ type: "push", item, section });
-    const pop = (item: string) => dispatch({ type: "pop", item });
-
-    return { root, path, data, insert, push, pop, getChildren };
+    return { root, path, insert, push, pop, getItem, getChildren };
 }
 
 export default useColumnView;

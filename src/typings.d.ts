@@ -39,4 +39,16 @@ declare module "react-column-view" {
     type Action<T> =
         | { type: "insert"; item: T; parentId?: string }
         | { type: "push" | "pop"; item: string; section?: number };
+
+    type UseColumnViewHookProps<T> = {
+        initialState?: State<T>;
+    };
+
+    interface UseColumnViewHookResult<T> extends Omit<State<T>, "data"> {
+        insert: (item: T, parentId?: string) => void;
+        push: (itemId: string, sectionIndex: number) => void;
+        pop: (itemId: string) => void;
+        getChildren: (item: string) => T[] | undefined;
+        getItem: (item: string) => T | undefined;
+    }
 }

@@ -1,6 +1,6 @@
 import { Action, State } from "react-column-view";
 import { v4 as uuid } from "uuid";
-import { omit } from "lodash";
+import _ from "lodash";
 
 function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): State<T> {
     switch (action.type) {
@@ -12,20 +12,23 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
                     id,
                     children: [],
                     parentId: action.parentId,
-                    data: omit(action.item, "id") as T,
+                    data: _.omit(action.item, "id") as T,
                 },
             };
             if (action.parentId) {
                 data[action.parentId] = {
                     ...data[action.parentId],
-                    children: [...data[action.parentId].children, id],
+                    children: [...data[action.parentId]?.children, id],
                 };
             }
             return {
                 ...state,
-                root: Object.values(data || {})
+                root: _(data)
+                    .values()
                     ?.filter((i) => !i.parentId)
-                    .map((i) => i.id),
+                    .map((i) => i.id)
+                    .compact()
+                    .valueOf(),
                 data,
             };
         case "push":
