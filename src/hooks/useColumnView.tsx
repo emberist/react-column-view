@@ -54,6 +54,6 @@ export function useColumnView<T>(
     );
     const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
 
-    //@ts-ignore
+    // @ts-ignore
     return { root, path, insert, push, pop, getItem, getChildren };
 }

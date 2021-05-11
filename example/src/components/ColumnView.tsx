@@ -55,7 +55,6 @@ const ColumnView = () => {
                                 onClick={() => push(child.id, sectionIndex + 1)}
                             >
                                 {getItem(child.id)?.name}.{index}
-                                <button className={"invisible hover:visible"}>Ciao</button>
                             </div>
                         );
                     })}
