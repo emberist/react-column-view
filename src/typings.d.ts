@@ -2,19 +2,6 @@
  * Default CSS definition for typescript,
  * will be overridden with file-specific definitions by rollup
  */
-declare module "*.css" {
-    const content: { [className: string]: string };
-    export default content;
-}
-
-interface SvgrComponent extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
-
-declare module "*.svg" {
-    const svgUrl: string;
-    const svgComponent: SvgrComponent;
-    export default svgUrl;
-    export { svgComponent as ReactComponent };
-}
 
 declare module "react-column-view" {
     type State<T> = {
@@ -36,6 +23,7 @@ declare module "react-column-view" {
 
     type UseColumnViewHookOptions<T> = {
         path?: string[];
+        fetchData?: Function;
         initialValues?: T[];
     };
 
@@ -43,7 +31,8 @@ declare module "react-column-view" {
         insert: (item: T, parentId?: string) => void;
         push: (itemId: string, sectionIndex: number) => void;
         pop: (itemId: string) => void;
-        getChildren: (item: string) => T[] | undefined;
         getItem: (item: string) => T | undefined;
+        getChildren: (item: string) => T[] | undefined;
+        getItems: (item: string[]) => T[] | undefined;
     }
 }

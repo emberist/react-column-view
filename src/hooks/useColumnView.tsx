@@ -23,18 +23,20 @@ export function useColumnView<T>(
         buildOptions(options) || INITIAL_STATE
     );
 
-    const getChildren = useCallback(
-        (id: string) => {
-            return compact(data?.[id]?.children?.map((id) => data?.[id]));
-        },
-        [data]
-    );
-
     const getItem = useCallback(
         (id: string) => {
             return data?.[id]?.data;
         },
         [data]
+    );
+
+    const getItems = useCallback((ids: string[]) => ids.map(getItem), [getItem]);
+
+    const getChildren = useCallback(
+        (id: string) => {
+            return compact(getItems(data?.[id]?.children || []));
+        },
+        [getItems]
     );
 
     const insert = useCallback(
@@ -55,5 +57,5 @@ export function useColumnView<T>(
     const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
 
     // @ts-ignore
-    return { root, path, insert, push, pop, getItem, getChildren };
+    return { root, path, insert, push, pop, getItem, getItems, getChildren };
 }
