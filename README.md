@@ -1,4 +1,4 @@
-# React Column View - Check out the [demo](https://reactcolumnviewexample.netlify.app/)
+# React Column View - Check out the <a href="https://reactcolumnviewexample.netlify.app/" target="_blank">example</a>
 
 Hooks for **easily** creating column views / file system trees in React
 
