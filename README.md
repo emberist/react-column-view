@@ -1,10 +1,10 @@
-# React Column View - Check out the <a href="https://reactcolumnviewexample.netlify.app/" target="_blank">example</a>
+# React Column View - Check out the [demo](https://reactcolumnviewexample.netlify.app/)
 
 Hooks for **easily** creating column views / file system trees in React
 
-## How to
+## Usage
 
-Simply run
+To install the library simply run
 
     yarn add react-column-view
 
@@ -15,4 +15,5 @@ And start using the main hook as
 ## :warning: Notice
 
 The library is currently under development, so feel free to join the project.
+
 **Let's code!**
