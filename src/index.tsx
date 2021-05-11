@@ -1,1 +1,1 @@
-export { default as useColumnView } from "./hooks/useColumnView";
+export { useColumnView } from "./hooks/useColumnView";

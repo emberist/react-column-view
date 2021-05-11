@@ -4,7 +4,13 @@ Hooks for creating **easily** column views / file system trees in React
 
 ## How to
 
-    TODO
+Simply run
+
+    yarn add react-column-view
+
+And start using the main hook as
+
+    const { path, root } = useColumnView();
 
 ## :warning: Notice
 

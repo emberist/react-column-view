@@ -1,15 +1,23 @@
 {
     "name": "react-column-view",
     "version": "0.0.1",
-    "description": "A React library for creating a customizable column/tree view explorer component",
+    "description": "A React hooks library for creating a customizable column/tree view explorer component",
     "keywords": [
         "react",
         "tree",
+        "file",
+        "structre",
         "explorer",
         "column-view",
         "view"
     ],
-    "author": "Riccardo Caranfil",
+    "homepage": "https://github.com/riccardocaranfil/react-column-view",
+    "bugs": "https://github.com/riccardocaranfil/react-column-view/issues",
+    "repository": {
+        "url": "https://github.com/riccardocaranfil/react-column-view",
+        "type": "git"
+    },
+    "author": "Riccardo Caranfil <riccardo.caranfil@gmail.com>",
     "license": "MIT",
     "main": "dist/index.js",
     "module": "dist/index.es.js",

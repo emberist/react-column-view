@@ -8,14 +8,16 @@
 import { useCallback, useReducer } from "react";
 import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "react-column-view";
 import { compact } from "lodash";
-import stateReducer from "../utils/stateReducer";
-import { buildOptions } from "../utils/utils";
+import stateReducer from "../reducer";
+import { buildOptions } from "../utils";
 
 const INITIAL_STATE: State<any> = {
     path: [],
 };
 
-function useColumnView<T>(options?: UseColumnViewHookOptions<T>): UseColumnViewHookResult<T> {
+export function useColumnView<T>(
+    options?: UseColumnViewHookOptions<T>
+): UseColumnViewHookResult<T> {
     const [{ root, data, path }, dispatch] = useReducer(
         stateReducer,
         buildOptions(options) || INITIAL_STATE
@@ -55,5 +57,3 @@ function useColumnView<T>(options?: UseColumnViewHookOptions<T>): UseColumnViewH
     //@ts-ignore
     return { root, path, insert, push, pop, getItem, getChildren };
 }
-
-export default useColumnView;

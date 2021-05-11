@@ -25,9 +25,8 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
                 ...state,
                 root: _(data)
                     .values()
-                    ?.filter((i) => !i.parentId)
+                    .filter((i) => i && !i.parentId)
                     .map((i) => i.id)
-                    .compact()
                     .valueOf(),
                 data,
             };
