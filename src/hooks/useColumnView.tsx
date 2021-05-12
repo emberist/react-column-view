@@ -17,9 +17,9 @@ const INITIAL_STATE: State<any> = {
     data: {},
 };
 
-export function useColumnView<T>(
+export const useColumnView = <T,>(
     options?: UseColumnViewHookOptions<T>
-): UseColumnViewHookResult<T> {
+): UseColumnViewHookResult<T> => {
     const [{ root, data, path }, dispatch] = useReducer(
         stateReducer,
         buildOptions(options) || INITIAL_STATE
@@ -44,10 +44,10 @@ export function useColumnView<T>(
     const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
 
     return {
-        root: createItemsProps(root, data),
-        path: createItemsProps(path, data),
+        root: createItemsProps(root, data, push),
+        path: createItemsProps(path, data, push),
         insert,
         push,
         pop,
     };
-}
+};

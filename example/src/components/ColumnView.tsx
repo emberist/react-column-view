@@ -10,7 +10,7 @@ type ColumnViewItem = {
 };
 
 const ColumnView = () => {
-    const { insert, root, path, push } = useColumnView<ColumnViewItem>();
+    const { insert, root, path } = useColumnView<ColumnViewItem>();
 
     return (
         <div
@@ -23,12 +23,10 @@ const ColumnView = () => {
                     {root?.map((item: WrappedItem<ColumnViewItem>, index: number) => (
                         <div
                             key={index}
+                            onClick={() => item.pushAt(0)}
                             className={classNames("p-2 hover:bg-gray-100", {
                                 "bg-gray-200": path.includes(item),
                             })}
-                            onClick={() => {
-                                push(item.data()?.id, 0);
-                            }}
                         >
                             {item?.data()?.name} {index}
                         </div>
@@ -43,19 +41,21 @@ const ColumnView = () => {
                             insert({ name: "Child " + (sectionIndex + 1) }, original[sectionIndex]);
                         }}
                     >
-                        {item.children()?.map((child: ColumnViewItem, index: number) => {
-                            return (
-                                <div
-                                    key={index}
-                                    onClick={() => push(child.id, sectionIndex + 1)}
-                                    className={classNames("p-2 hover:bg-gray-100", {
-                                        "bg-gray-200": path.includes(child.id),
-                                    })}
-                                >
-                                    {child.name}.{index}
-                                </div>
-                            );
-                        })}
+                        {item
+                            .children()
+                            ?.map((child: WrappedItem<ColumnViewItem>, index: number) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        onClick={() => child.pushAt(sectionIndex + 1)}
+                                        className={classNames("p-2 hover:bg-gray-100", {
+                                            "bg-gray-200": path.includes(child.data()?.id),
+                                        })}
+                                    >
+                                        {child.data()?.name}.{index}
+                                    </div>
+                                );
+                            })}
                     </Section>
                 ))}
             </div>

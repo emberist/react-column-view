@@ -49,6 +49,7 @@ declare module "react-column-view" {
 
     export type WrappedItem<T> = {
         data: () => T | undefined;
-        children: () => T[];
+        children: () => CreateItemsPropsResult<T>;
+        pushAt: (atSection: number) => void;
     };
 }
