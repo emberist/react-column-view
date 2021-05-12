@@ -3,8 +3,8 @@ import {
     CreateItemsPropsResult,
     State,
     UseColumnViewHookOptions,
-    WrappedItem,
-} from "react-column-view";
+    WrappedItem
+} from "../types";
 
 const getItem = <T>(id: string, data: Record<string, ColumnItem<T>>): T | undefined =>
     data?.[id]?.data;
@@ -26,8 +26,8 @@ export const createItemProps = <T>(
         pushAt: (atSection: number) => push(id, atSection),
         buildProps: (additional?: object) => ({
             ...additional,
-            key: id,
-        }),
+            key: id
+        })
     };
 };
 
@@ -39,10 +39,10 @@ export const createItemsProps = <T>(
     return {
         length: ids.length,
         includes: ids.includes,
-        map: (callbackfn) =>
+        map: callbackfn =>
             ids.map((id, index) => callbackfn(createItemProps(id, data, push), index, ids)),
-        forEach: (callbackfn) =>
-            ids.forEach((id, index) => callbackfn(createItemProps(id, data, push), index, ids)),
+        forEach: callbackfn =>
+            ids.forEach((id, index) => callbackfn(createItemProps(id, data, push), index, ids))
     };
 };
 
@@ -67,6 +67,6 @@ export const buildOptions = <T>(options?: UseColumnViewHookOptions<T>): State<T>
     return {
         path: options.path || [],
         root: [],
-        data,
+        data
     };
 };
