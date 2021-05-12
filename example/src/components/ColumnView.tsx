@@ -1,7 +1,7 @@
+import React, { Fragment } from "react";
 import Section from "./Section";
-import React from "react";
 import classNames from "classnames";
-import { useColumnView } from "react-column-view";
+import { useColumnView, WrappedItem } from "react-column-view";
 
 type ColumnViewItem = {
     id?: string;
@@ -9,57 +9,63 @@ type ColumnViewItem = {
 };
 
 const ColumnView = () => {
-    const { insert, root, path, getChildren, push, getItem } = useColumnView<ColumnViewItem>();
+    const { insert, root, path } = useColumnView<ColumnViewItem>();
+
     return (
         <div
-            className={classNames(
-                "rounded-xl p-2 min-h-[400px] flex bg-white overflow-auto gap-x-1"
-            )}
+            className={
+                "border-2 border-gray-400 rounded-md overflow-auto min-h-[400px] flex flex-col bg-white"
+            }
         >
-            <Section
-                title={"Section 1"}
-                onClick={() => {
-                    insert({ name: "Child" });
-                }}
-            >
-                {root?.map((item: string, index: number) => (
-                    <div
-                        key={index}
-                        className={classNames("p-2 hover:bg-gray-100", {
-                            "bg-gray-200": path.includes(item),
-                        })}
+            <div className={"flex flex-grow overflow-auto divide-x-2"}>
+                <Section title={"Section 1"} onClick={() => insert({ name: "Child" })}>
+                    {root?.map((item: WrappedItem<ColumnViewItem>, index: number) => (
+                        <div
+                            {...item.buildProps()}
+                            onClick={() => item.pushAt(0)}
+                            className={classNames("p-2 hover:bg-gray-100", {
+                                "bg-gray-200": path.includes(item),
+                            })}
+                        >
+                            {item?.data()?.name} {index}
+                        </div>
+                    ))}
+                </Section>
+
+                {path?.map((item: any, sectionIndex: number, original: string[]) => (
+                    <Section
+                        key={sectionIndex}
+                        title={"Section " + (sectionIndex + 2)}
                         onClick={() => {
-                            push(item, 0);
+                            insert({ name: "Child " + (sectionIndex + 1) }, original[sectionIndex]);
                         }}
                     >
-                        {getItem(item)?.name} {index}
-                    </div>
+                        {item
+                            .children()
+                            ?.map((child: WrappedItem<ColumnViewItem>, index: number) => {
+                                return (
+                                    <div
+                                        {...child.buildProps()}
+                                        onClick={() => child.pushAt(sectionIndex + 1)}
+                                        className={classNames("p-2 hover:bg-gray-100", {
+                                            "bg-gray-200": path.includes(child.data()?.id),
+                                        })}
+                                    >
+                                        {child.data()?.name}.{index}
+                                    </div>
+                                );
+                            })}
+                    </Section>
                 ))}
-            </Section>
-
-            {path?.map((item: string, sectionIndex: number) => (
-                <Section
-                    key={sectionIndex}
-                    title={"Section " + (sectionIndex + 2)}
-                    onClick={() => {
-                        insert({ name: "Child " + (sectionIndex + 1) }, path[sectionIndex]);
-                    }}
-                >
-                    {getChildren(item)?.map((child: ColumnViewItem, index: number) => {
-                        return (
-                            <div
-                                key={index}
-                                className={classNames("p-2 hover:bg-gray-100", {
-                                    "bg-gray-200": path.includes(child.id),
-                                })}
-                                onClick={() => push(child.id, sectionIndex + 1)}
-                            >
-                                {getItem(child.id)?.name}.{index}
-                            </div>
-                        );
-                    })}
-                </Section>
-            ))}
+            </div>
+            <div className={"flex border-t-2"}>
+                {path.map((item: WrappedItem<ColumnViewItem>, index: number) => (
+                    <Fragment {...item.buildProps()}>
+                        <div className={"px-5 py-2"}>{item?.data()?.name}</div>
+                        {index < path.length - 1 && <div className={"font-bold px-5 py-2"}>/</div>}
+                    </Fragment>
+                ))}
+            </div>
         </div>
     );
 };

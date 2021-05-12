@@ -6,35 +6,23 @@
  */
 
 import { useCallback, useReducer } from "react";
-import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "react-column-view";
-import { compact } from "lodash";
+
 import stateReducer from "../reducer";
-import { buildOptions } from "../utils";
+import { buildOptions, createItemsProps } from "../utils";
+import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "react-column-view";
 
 const INITIAL_STATE: State<any> = {
     path: [],
+    root: [],
+    data: {},
 };
 
-export function useColumnView<T>(
+export const useColumnView = <T,>(
     options?: UseColumnViewHookOptions<T>
-): UseColumnViewHookResult<T> {
+): UseColumnViewHookResult<T> => {
     const [{ root, data, path }, dispatch] = useReducer(
         stateReducer,
         buildOptions(options) || INITIAL_STATE
-    );
-
-    const getChildren = useCallback(
-        (id: string) => {
-            return compact(data?.[id]?.children?.map((id) => data?.[id]));
-        },
-        [data]
-    );
-
-    const getItem = useCallback(
-        (id: string) => {
-            return data?.[id]?.data;
-        },
-        [data]
     );
 
     const insert = useCallback(
@@ -52,8 +40,14 @@ export function useColumnView<T>(
         (item: string, section: number) => dispatch({ type: "push", item, section }),
         [dispatch]
     );
+
     const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
 
-    // @ts-ignore
-    return { root, path, insert, push, pop, getItem, getChildren };
-}
+    return {
+        root: createItemsProps(root, data, push),
+        path: createItemsProps(path, data, push),
+        insert,
+        push,
+        pop,
+    };
+};

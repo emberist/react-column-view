@@ -12,7 +12,10 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
                     id,
                     children: [],
                     parentId: action.parentId,
-                    data: _.omit(action.item, "id") as T,
+                    data: {
+                        ...action.item,
+                        id,
+                    },
                 },
             };
             if (action.parentId) {
@@ -38,6 +41,7 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
             } else {
                 p.push(action.item);
             }
+
             return {
                 ...state,
                 path: [...p],
