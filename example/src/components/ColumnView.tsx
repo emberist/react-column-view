@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Section from "./Section";
 import classNames from "classnames";
 //@ts-ignore
@@ -22,7 +22,7 @@ const ColumnView = () => {
                 <Section title={"Section 1"} onClick={() => insert({ name: "Child" })}>
                     {root?.map((item: WrappedItem<ColumnViewItem>, index: number) => (
                         <div
-                            key={index}
+                            {...item.buildProps()}
                             onClick={() => item.pushAt(0)}
                             className={classNames("p-2 hover:bg-gray-100", {
                                 "bg-gray-200": path.includes(item),
@@ -46,7 +46,7 @@ const ColumnView = () => {
                             ?.map((child: WrappedItem<ColumnViewItem>, index: number) => {
                                 return (
                                     <div
-                                        key={index}
+                                        {...child.buildProps()}
                                         onClick={() => child.pushAt(sectionIndex + 1)}
                                         className={classNames("p-2 hover:bg-gray-100", {
                                             "bg-gray-200": path.includes(child.data()?.id),
@@ -61,10 +61,10 @@ const ColumnView = () => {
             </div>
             <div className={"flex border-t-2"}>
                 {path.map((item: WrappedItem<ColumnViewItem>, index: number) => (
-                    <>
+                    <Fragment {...item.buildProps()}>
                         <div className={"px-5 py-2"}>{item?.data()?.name}</div>
                         {index < path.length - 1 && <div className={"font-bold px-5 py-2"}>/</div>}
-                    </>
+                    </Fragment>
                 ))}
             </div>
         </div>

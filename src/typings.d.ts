@@ -51,5 +51,6 @@ declare module "react-column-view" {
         data: () => T | undefined;
         children: () => CreateItemsPropsResult<T>;
         pushAt: (atSection: number) => void;
+        buildProps: (additional?: object) => { key: string };
     };
 }
