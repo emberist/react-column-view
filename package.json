@@ -1,6 +1,13 @@
 {
     "name": "react-column-view",
-    "version": "0.0.1-alpha.0",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "src"
+    ],
+    "version": "0.0.1-alpha.2",
     "description": "A React hooks library for creating a customizable column/tree view explorer component",
     "keywords": [
         "react",
@@ -18,67 +25,55 @@
         "type": "git"
     },
     "author": "Riccardo Caranfil <riccardo.caranfil@gmail.com>",
-    "license": "MIT",
-    "main": "dist/index.js",
-    "module": "dist/index.es.js",
-    "jsnext:main": "dist/index.es.js",
-    "files": [
-        "dist"
-    ],
     "engines": {
-        "node": ">=8",
-        "npm": ">=5"
+        "node": ">=10"
     },
     "scripts": {
-        "test": "react-scripts test",
-        "coverage": "CI=true npm test -- --coverage",
-        "build": "rollup -c",
-        "start": "rollup -c -w",
-        "prepare": "yarn run build",
-        "predeploy": "cd example && yarn install && yarn run build"
+        "start": "tsdx watch",
+        "build": "tsdx build",
+        "test": "tsdx test --passWithNoTests",
+        "lint": "tsdx lint",
+        "prepare": "tsdx build",
+        "size": "size-limit",
+        "analyze": "size-limit --why"
     },
+    "peerDependencies": {
+        "react": ">=16",
+        "react-dom": ">=17.0.1"
+    },
+    "module": "dist/react-column-view.esm.js",
+    "size-limit": [
+        {
+            "path": "dist/react-column-view.cjs.production.min.js",
+            "limit": "10 KB"
+        },
+        {
+            "path": "dist/react-column-view.esm.js",
+            "limit": "10 KB"
+        }
+    ],
     "dependencies": {
         "classnames": "^2.3.1",
         "lodash": "^4.17.21",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
+        "lodash-es": "^4.17.21",
         "uuid": "^8.3.2"
     },
-    "peerDependencies": {
-        "react": ">=17.0.1",
-        "react-dom": ">=17.0.1"
-    },
-    "types": "./src/typings.d.ts",
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@rollup/plugin-commonjs": "^15.1.0",
-        "@rollup/plugin-node-resolve": "^9.0.0",
-        "@rollup/plugin-url": "^5.0.1",
-        "@semantic-release/changelog": "^5.0.1",
-        "@semantic-release/commit-analyzer": "^8.0.1",
-        "@semantic-release/git": "^9.0.0",
-        "@semantic-release/gitlab": "^6.0.5",
-        "@semantic-release/release-notes-generator": "^9.0.1",
-        "@svgr/rollup": "^5.4.0",
-        "@types/jest": "^26.0.15",
-        "@types/lodash": "^4.14.168",
-        "@types/react": "^16.9.53",
-        "@types/react-dom": "^16.9.8",
+        "@size-limit/preset-small-lib": "^4.10.2",
+        "@types/lodash": "^4.14.169",
+        "@types/react": "^17.0.5",
+        "@types/react-dom": "^17.0.4",
         "@types/uuid": "^8.3.0",
-        "babel-core": "^6.26.3",
-        "babel-runtime": "^6.26.0",
         "husky": "^4.3.0",
         "lint-staged": "^10.4.2",
-        "prettier": "^2.1.2",
-        "react-scripts": "4.0.0",
-        "rollup": "^2.32.1",
-        "rollup-plugin-babel": "^4.4.0",
-        "rollup-plugin-peer-deps-external": "^2.2.4",
-        "rollup-plugin-postcss": "^3.1.8",
-        "rollup-plugin-typescript2": "^0.28.0",
-        "semantic-release": "^17.2.1",
-        "typescript": "~4.0.3"
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "size-limit": "^4.10.2",
+        "tsdx": "^0.14.1",
+        "tslib": "^2.2.0",
+        "typescript": "^4.2.4"
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx,json,css,html,md,yml}": [
@@ -90,9 +85,5 @@
             "pre-commit": "lint-staged",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
-    },
-    "resolutions": {
-        "**/react": "^17.0.2",
-        "**/react-dom": "^17.0.2"
     }
 }

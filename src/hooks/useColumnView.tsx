@@ -7,14 +7,14 @@
 
 import { useCallback, useReducer } from "react";
 
-import stateReducer from "../reducer";
+import stateReducer from "../core/reducer";
 import { buildOptions, createItemsProps } from "../utils";
-import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "react-column-view";
+import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "../types";
 
 const INITIAL_STATE: State<any> = {
     path: [],
     root: [],
-    data: {},
+    data: {}
 };
 
 export const useColumnView = <T,>(
@@ -31,7 +31,7 @@ export const useColumnView = <T,>(
                 type: "insert",
                 //@ts-ignore
                 item,
-                parentId,
+                parentId
             }),
         [dispatch]
     );
@@ -44,10 +44,12 @@ export const useColumnView = <T,>(
     const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
 
     return {
+        // @ts-ignore
         root: createItemsProps(root, data, push),
+        // @ts-ignore
         path: createItemsProps(path, data, push),
         insert,
         push,
-        pop,
+        pop
     };
 };

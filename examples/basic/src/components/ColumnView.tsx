@@ -24,7 +24,7 @@ const ColumnView = () => {
                             {...item.buildProps()}
                             onClick={() => item.pushAt(0)}
                             className={classNames("p-2 hover:bg-gray-100", {
-                                "bg-gray-200": path.includes(item),
+                                "bg-gray-200": path.includes(item)
                             })}
                         >
                             {item?.data()?.name} {index}
@@ -48,7 +48,7 @@ const ColumnView = () => {
                                         {...child.buildProps()}
                                         onClick={() => child.pushAt(sectionIndex + 1)}
                                         className={classNames("p-2 hover:bg-gray-100", {
-                                            "bg-gray-200": path.includes(child.data()?.id),
+                                            "bg-gray-200": path.includes(child.data()?.id)
                                         })}
                                     >
                                         {child.data()?.name}.{index}

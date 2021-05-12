@@ -3,7 +3,7 @@ import React, { FC, HTMLAttributes } from "react";
 const Section: FC<Pick<HTMLAttributes<HTMLButtonElement>, "onClick"> & { title: string }> = ({
     children,
     title,
-    onClick,
+    onClick
 }) => {
     return (
         <div className="min-w-[250px] sm:w-52">
