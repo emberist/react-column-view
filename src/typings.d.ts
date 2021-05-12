@@ -4,6 +4,10 @@
  */
 
 declare module "react-column-view" {
+    export const useColumnView: <T>(
+        options?: UseColumnViewHookOptions<T> | undefined
+    ) => UseColumnViewHookResult<T>;
+
     export type State<T> = {
         path: string[];
         root: string[];
@@ -35,11 +39,15 @@ declare module "react-column-view" {
         pop: (itemId: string) => void;
     }
 
-    export type Callback = <T>(i: WrappedItem<T>, index: number, original: string[]) => any | void;
+    export type Callback = <T>(
+        item: WrappedItem<T>,
+        index: number,
+        original: string[]
+    ) => any | void;
 
     export type CreateItemsPropsResult<T> = {
-        map: (callback: Callback) => CreateItemsPropsResult<T>[];
-        forEach: (callback: Callback) => void;
+        map: <T>(callback: Callback<T>) => CreateItemsPropsResult<T>[];
+        forEach: <T>(callback: Callback<T>) => void;
         includes: (item: any) => boolean;
         length: number;
     };

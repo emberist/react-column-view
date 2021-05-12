@@ -6,10 +6,10 @@
  */
 
 import { useCallback, useReducer } from "react";
-import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "react-column-view";
+
 import stateReducer from "../reducer";
-import { buildOptions } from "../utils";
-import createItemsProps from "../utils/createItemProps";
+import { buildOptions, createItemsProps } from "../utils";
+import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "react-column-view";
 
 const INITIAL_STATE: State<any> = {
     path: [],

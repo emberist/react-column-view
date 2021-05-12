@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import Section from "./Section";
 import classNames from "classnames";
-//@ts-ignore
 import { useColumnView, WrappedItem } from "react-column-view";
 
 type ColumnViewItem = {
