@@ -6,7 +6,7 @@ const Section: FC<Pick<HTMLAttributes<HTMLButtonElement>, "onClick"> & { title: 
     onClick,
 }) => {
     return (
-        <div className="min-w-[250px] sm:w-52 border-r-2">
+        <div className="min-w-[250px] sm:w-52">
             <div className={"p-2 bg-gray-100 items-center flex justify-between border-b-2"}>
                 <div className={"font-medium"}>{title}</div>
                 <button

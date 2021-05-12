@@ -18,7 +18,7 @@ const ColumnView = () => {
                 "border-2 border-gray-400 rounded-md overflow-auto min-h-[400px] flex flex-col bg-white"
             }
         >
-            <div className={"flex flex-grow overflow-auto"}>
+            <div className={"flex flex-grow overflow-auto divide-x-2"}>
                 <Section title={"Section 1"} onClick={() => insert({ name: "Child" })}>
                     {root?.map((item: WrappedItem<ColumnViewItem>, index: number) => (
                         <div

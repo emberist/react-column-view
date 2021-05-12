@@ -33,9 +33,6 @@ declare module "react-column-view" {
         insert: (item: T, parentId?: string) => void;
         push: (itemId: string, sectionIndex: number) => void;
         pop: (itemId: string) => void;
-        // getItem: (item: string) => T | undefined;
-        // getChildren: (item: string) => T[] | undefined;
-        // getItems: (item: string[]) => T[] | undefined;
     }
 
     export type Callback = <T>(i: WrappedItem<T>, index: number, original: string[]) => any | void;

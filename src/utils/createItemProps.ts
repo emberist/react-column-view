@@ -1,5 +1,4 @@
 import { ColumnItem, CreateItemsPropsResult, WrappedItem } from "react-column-view";
-import { v4 as uuid } from "uuid";
 
 const getItem = <T>(id: string, data: Record<string, ColumnItem<T>>): T | undefined =>
     data?.[id]?.data;
@@ -21,7 +20,7 @@ export const createItemProps = <T>(
         pushAt: (atSection: number) => push(id, atSection),
         buildProps: (additional?: object) => ({
             ...additional,
-            key: uuid(),
+            key: id,
         }),
     };
 };
@@ -32,12 +31,12 @@ const createItemsProps = <T>(
     push: any
 ): CreateItemsPropsResult<T> => {
     return {
+        length: ids.length,
+        includes: ids.includes,
         map: (callback) =>
             ids.map((id, index) => callback(createItemProps(id, data, push), index, ids)),
         forEach: (callback) =>
             ids.forEach((id, index) => callback(createItemProps(id, data, push), index, ids)),
-        includes: ids.includes,
-        length: ids.length,
     };
 };
 
