@@ -8,6 +8,7 @@
         "allowJs": false,
         "jsx": "react",
         "declaration": true,
+        "declarationDir": "dist",
         "moduleResolution": "node",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
@@ -27,5 +28,5 @@
         "noFallthroughCasesInSwitch": true
     },
     "include": ["src"],
-    "exclude": ["node_modules", "build", "dist", "example", "rollup.config.js"]
+    "exclude": ["node_modules", "build", "dist", "**/example", "rollup.config.js"]
 }

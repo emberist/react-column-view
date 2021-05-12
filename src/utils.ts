@@ -19,6 +19,7 @@ export const buildOptions = <T>(options?: UseColumnViewHookOptions<T>): State<T>
 
     return {
         path: options.path || [],
+        root: [],
         data,
     };
 };

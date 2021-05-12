@@ -41,6 +41,8 @@ function reducer<T extends { id: string }>(state: State<T>, action: Action<T>): 
             } else {
                 p.push(action.item);
             }
+
+            console.log("[dd] new path", p);
             return {
                 ...state,
                 path: [...p],
