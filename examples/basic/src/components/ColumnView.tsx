@@ -19,7 +19,7 @@ const ColumnView = () => {
         >
             <div className={"flex flex-grow overflow-auto divide-x-2"}>
                 <Section title={"Section 1"} onClick={() => insert({ name: "Child" })}>
-                    {root?.map((item: WrappedItem<ColumnViewItem>, index: number) => (
+                    {root?.map((item, index: number) => (
                         <div
                             {...item.buildProps()}
                             onClick={() => item.pushAt(0)}
@@ -32,7 +32,7 @@ const ColumnView = () => {
                     ))}
                 </Section>
 
-                {path?.map((item: any, sectionIndex: number, original: string[]) => (
+                {path?.map((item, sectionIndex: number, original: string[]) => (
                     <Section
                         key={sectionIndex}
                         title={"Section " + (sectionIndex + 2)}
@@ -40,21 +40,19 @@ const ColumnView = () => {
                             insert({ name: "Child " + (sectionIndex + 1) }, original[sectionIndex]);
                         }}
                     >
-                        {item
-                            .children()
-                            ?.map((child: WrappedItem<ColumnViewItem>, index: number) => {
-                                return (
-                                    <div
-                                        {...child.buildProps()}
-                                        onClick={() => child.pushAt(sectionIndex + 1)}
-                                        className={classNames("p-2 hover:bg-gray-100", {
-                                            "bg-gray-200": child.isSelected
-                                        })}
-                                    >
-                                        {child.data()?.name}.{index}
-                                    </div>
-                                );
-                            })}
+                        {item.children().map((child, index: number) => {
+                            return (
+                                <div
+                                    {...child.buildProps()}
+                                    onClick={() => child.pushAt(sectionIndex + 1)}
+                                    className={classNames("p-2 hover:bg-gray-100", {
+                                        "bg-gray-200": child.isSelected
+                                    })}
+                                >
+                                    {child.data()?.name}.{index}
+                                </div>
+                            );
+                        })}
                     </Section>
                 ))}
             </div>
