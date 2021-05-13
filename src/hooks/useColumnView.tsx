@@ -7,7 +7,7 @@
 
 import { useCallback, useReducer } from "react";
 
-import stateReducer from "../core/reducer";
+import { createReducer } from "../core/reducer";
 import { buildOptions, createItemsProps } from "../utils";
 import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "../types";
 
@@ -20,6 +20,8 @@ const INITIAL_STATE: State<any> = {
 export const useColumnView = <T,>(
     options?: UseColumnViewHookOptions<T>
 ): UseColumnViewHookResult<T> => {
+    const stateReducer = createReducer<T>();
+
     const [{ root, data, path }, dispatch] = useReducer(
         stateReducer,
         buildOptions(options) || INITIAL_STATE
@@ -29,7 +31,6 @@ export const useColumnView = <T,>(
         (item: T, parentId?: string) =>
             dispatch({
                 type: "insert",
-                //@ts-ignore
                 item,
                 parentId
             }),
@@ -41,15 +42,11 @@ export const useColumnView = <T,>(
         [dispatch]
     );
 
-    const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
+    // const pop = useCallback((item: string) => dispatch({type: "pop", item}), [dispatch]);
 
     return {
-        // @ts-ignore
-        root: createItemsProps(root, data, push),
-        // @ts-ignore
-        path: createItemsProps(path, data, push),
-        insert,
-        push,
-        pop
+        root: createItemsProps<T>(root, { push, path, data }),
+        path: createItemsProps<T>(path, { push, path, data }),
+        insert
     };
 };

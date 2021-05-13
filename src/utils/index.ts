@@ -9,20 +9,18 @@ import {
 const getItem = <T>(id: string, data: Record<string, ColumnItem<T>>): T | undefined =>
     data?.[id]?.data;
 
-const getChildren = <T>(
-    id: string,
-    data: Record<string, ColumnItem<T>>,
-    push: any
-): CreateItemsPropsResult<T> => createItemsProps<T>(data?.[id]?.children || [], data, push);
+const getChildren = <T>(id: string, context: ViewContext<T>): CreateItemsPropsResult<T> =>
+    createItemsProps<T>(context.data?.[id]?.children || [], context);
 
-export const createItemProps = <T>(
-    id: string,
-    data: Record<string, ColumnItem<T>>,
-    push: any
-): WrappedItem<T> => {
+type ViewContext<T> = { path: string[]; push: any; data: Record<string, ColumnItem<T>> };
+
+export const createItemProps = <T>(id: string, context: ViewContext<T>): WrappedItem<T> => {
+    const { data, push, path } = context;
+    const item = getItem(id, data);
     return {
-        data: () => getItem(id, data),
-        children: () => getChildren(id, data, push),
+        data: () => item,
+        isSelected: path.includes(id),
+        children: () => getChildren(id, context),
         pushAt: (atSection: number) => push(id, atSection),
         buildProps: (additional?: object) => ({
             ...additional,
@@ -33,16 +31,15 @@ export const createItemProps = <T>(
 
 export const createItemsProps = <T>(
     ids: string[],
-    data: Record<string, ColumnItem<T>>,
-    push: any
+    context: ViewContext<T>
 ): CreateItemsPropsResult<T> => {
     return {
         length: ids.length,
         includes: ids.includes,
-        map: callbackfn =>
-            ids.map((id, index) => callbackfn(createItemProps(id, data, push), index, ids)),
-        forEach: callbackfn =>
-            ids.forEach((id, index) => callbackfn(createItemProps(id, data, push), index, ids))
+        map: callbackFn =>
+            ids.map((id, index) => callbackFn(createItemProps(id, context), index, ids)),
+        forEach: callbackFn =>
+            ids.forEach((id, index) => callbackFn(createItemProps(id, context), index, ids))
     };
 };
 

@@ -1,5 +1,6 @@
 {
     "name": "react-column-view",
+    "version": "0.0.1-alpha.2",
     "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
@@ -7,7 +8,6 @@
         "dist",
         "src"
     ],
-    "version": "0.0.1-alpha.2",
     "description": "A React hooks library for creating a customizable column/tree view explorer component",
     "keywords": [
         "react",
@@ -38,7 +38,7 @@
         "analyze": "size-limit --why"
     },
     "peerDependencies": {
-        "react": ">=16",
+        "react": ">=17.0.1",
         "react-dom": ">=17.0.1"
     },
     "module": "dist/react-column-view.esm.js",

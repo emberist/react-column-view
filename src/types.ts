@@ -25,8 +25,6 @@ export interface UseColumnViewHookResult<T> {
     root: CreateItemsPropsResult<T>;
     path: CreateItemsPropsResult<T>;
     insert: (item: T, parentId?: string) => void;
-    push: (itemId: string, sectionIndex: number) => void;
-    pop: (itemId: string) => void;
 }
 
 export type MapCallback<T> = (
@@ -43,8 +41,9 @@ export type CreateItemsPropsResult<T> = {
 };
 
 export type WrappedItem<T> = {
+    isSelected?: boolean;
     data: () => T | undefined;
+    pushAt: (section: number) => void;
     children: () => CreateItemsPropsResult<T>;
-    pushAt: (atSection: number) => void;
     buildProps: (additional?: object) => { key: string };
 };
