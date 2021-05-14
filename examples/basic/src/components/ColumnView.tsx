@@ -13,7 +13,6 @@ type ColumnViewItem = {
 
 const ColumnView = () => {
     const [name, setName] = useState<string>();
-    const [search, setSearch] = useState<string>();
 
     const initialValues: ColumnViewItem[] = useMemo(
         () => [
@@ -45,7 +44,7 @@ const ColumnView = () => {
         ],
         []
     );
-    const { insert, root, path, navigate } = useColumnView<ColumnViewItem>({
+    const { insert, root, path } = useColumnView<ColumnViewItem>({
         initialValues
     });
 
@@ -92,13 +91,6 @@ const ColumnView = () => {
                 >
                     Push to path
                 </Button>
-                <input
-                    type="text"
-                    placeholder="Search"
-                    value={name || ""}
-                    onChange={e => setName(e.target.value)}
-                    className="input align-end"
-                />
             </div>
             <div className={"flex flex-auto overflow-y-hidden border-t-2"}>
                 <Section
