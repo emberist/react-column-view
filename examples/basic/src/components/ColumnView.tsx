@@ -11,6 +11,8 @@ type ColumnViewItem = {
 
 const ColumnView = () => {
     const [name, setName] = useState<string>();
+    const [search, setSearch] = useState<string>();
+
     const { insert, root, path, navigate } = useColumnView<ColumnViewItem>();
 
     return (
@@ -19,55 +21,56 @@ const ColumnView = () => {
                 "border-2 border-gray-400 rounded-md overflow-auto min-w-[600px] max-w-[80%] min-h-[400px] flex flex-col bg-white"
             }
         >
-            <div className={"flex p-2"}>
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={name || ""}
-                    onChange={e => setName(e.target.value)}
-                    className="px-3 mr-2 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring "
-                />
-                <Button
-                    disabled={!name}
-                    onClick={() => {
-                        if (name) {
-                            insert({
-                                name: name || "Unknown"
-                            });
-                            setName(undefined);
-                        }
-                    }}
-                >
-                    Add in root
-                </Button>
-                <Button
-                    disabled={!name}
-                    onClick={() => {
-                        if (name) {
-                            insert(
-                                {
+            <div className={"flex p-2 justify-between"}>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Name"
+                        value={name || ""}
+                        onChange={e => setName(e.target.value)}
+                        className="px-3 mr-2 h-full placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring "
+                    />
+                    <Button
+                        disabled={!name}
+                        onClick={() => {
+                            if (name) {
+                                insert({
                                     name: name || "Unknown"
-                                },
-                                path.original[path.length - 1]
-                            );
-                            setName(undefined);
-                        }
-                    }}
-                >
-                    Push to path
-                </Button>
-                <Button
-                    disabled={!name}
-                    onClick={() => {
-                        if (name) {
-                            console.log("[dd]", navigate(name));
-                        }
-                    }}
-                >
-                    Navigate
-                </Button>
+                                });
+                                setName(undefined);
+                            }
+                        }}
+                    >
+                        Add in root
+                    </Button>
+                    <Button
+                        disabled={!name}
+                        onClick={() => {
+                            if (name) {
+                                insert(
+                                    {
+                                        name: name || "Unknown"
+                                    },
+                                    path.original[path.length - 1]
+                                );
+                                setName(undefined);
+                            }
+                        }}
+                    >
+                        Push to path
+                    </Button>
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        value={name || ""}
+                        onChange={e => setName(e.target.value)}
+                        className="px-3 mr-2 h-full placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring "
+                    />
+                </div>
             </div>
-            <div className={"flex flex-grow overflow-auto divide-x-2 border-t-2"}>
+            <div className={"flex flex-grow overflow-auto border-t-2"}>
                 <Section
                     title={"Section 1"}
                     onClick={() => insert({ name: "Child " + (root.length + 1) })}
