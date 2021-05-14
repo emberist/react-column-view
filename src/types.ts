@@ -15,10 +15,11 @@ export type ColumnItem<T> = {
     data: T;
 };
 
-export type UseColumnViewHookOptions<T> = {
+export type UseColumnViewHookOptions<T extends {}> = {
     path?: string[];
-    fetchData?: Function;
     initialValues?: T[];
+    childrenAccessor?: string;
+    parentAccessor?: string;
 };
 
 export interface UseColumnViewHookResult<T> {

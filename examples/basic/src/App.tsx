@@ -3,11 +3,7 @@ import ColumnView from "./components/ColumnView";
 
 function App() {
     return (
-        <div
-            className={
-                "bg-gradient-to-r from-green-400 to-blue-500 pin h-screen w-screen flex flex-col items-center justify-center"
-            }
-        >
+        <div className={"cover"}>
             <div className={"text-4xl sm:text-6xl lg:text-7xl font-bold pb-10 text-white"}>
                 React Column View
             </div>

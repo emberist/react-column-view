@@ -13,7 +13,7 @@ const Section: FC<Pick<HTMLAttributes<HTMLButtonElement>, "onClick"> & { title: 
 
                 <Button onClick={onClick}>Add</Button>
             </div>
-            <div className={"overflow-auto divide-y-2"}>{children}</div>
+            <div className={"overflow-auto divide-y-2 h-full"}>{children}</div>
         </div>
     );
 };
