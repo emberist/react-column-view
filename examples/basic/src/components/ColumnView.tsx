@@ -11,12 +11,12 @@ type ColumnViewItem = {
 
 const ColumnView = () => {
     const [name, setName] = useState<string>();
-    const { insert, root, path } = useColumnView<ColumnViewItem>();
+    const { insert, root, path, navigate } = useColumnView<ColumnViewItem>();
 
     return (
         <div
             className={
-                "border-2 border-gray-400 rounded-md overflow-auto min-h-[400px] flex flex-col bg-white"
+                "border-2 border-gray-400 rounded-md overflow-auto min-w-[600px] max-w-[80%] min-h-[400px] flex flex-col bg-white"
             }
         >
             <div className={"flex p-2"}>
@@ -55,6 +55,16 @@ const ColumnView = () => {
                     }}
                 >
                     Push to path
+                </Button>
+                <Button
+                    disabled={!name}
+                    onClick={() => {
+                        if (name) {
+                            console.log("[dd]", navigate(name));
+                        }
+                    }}
+                >
+                    Navigate
                 </Button>
             </div>
             <div className={"flex flex-grow overflow-auto divide-x-2 border-t-2"}>
