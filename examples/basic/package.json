@@ -7,9 +7,9 @@
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
-        "react": "17.0.2",
-        "react-column-view": "latest",
-        "react-dom": "17.0.2",
+        "react": "link:../../node_modules/react",
+        "react-column-view": "link:../../",
+        "react-dom": "link:../../node_modules/react-dom",
         "react-scripts": "^4.0.3",
         "typescript": "^4.1.2",
         "web-vitals": "^1.0.1"
@@ -18,8 +18,7 @@
         "start": "craco start",
         "build": "craco build",
         "test": "craco test",
-        "eject": "react-scripts eject",
-        "add:link": "npm link ../node_modules/react && npm link ../node_modules/react-dom"
+        "eject": "react-scripts eject"
     },
     "eslintConfig": {
         "extends": [
