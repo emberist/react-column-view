@@ -57,9 +57,12 @@ const ColumnView = () => {
                     Push to path
                 </Button>
             </div>
-            <div className={"flex flex-grow overflow-auto divide-x-2"}>
-                <Section title={"Section 1"} onClick={() => insert({ name: "Child" })}>
-                    {root?.map((item: WrappedItem<ColumnViewItem>, index: number) => (
+            <div className={"flex flex-grow overflow-auto divide-x-2 border-t-2"}>
+                <Section
+                    title={"Section 1"}
+                    onClick={() => insert({ name: "Child " + (root.length + 1) })}
+                >
+                    {root?.map((item: WrappedItem<ColumnViewItem>) => (
                         <div
                             {...item.buildProps()}
                             onClick={() => item.pushAt(0)}
@@ -67,7 +70,7 @@ const ColumnView = () => {
                                 "bg-gray-200": item.isSelected
                             })}
                         >
-                            {item?.name} {index}
+                            {item?.name}
                         </div>
                     ))}
                 </Section>
@@ -83,26 +86,24 @@ const ColumnView = () => {
                             title={"Section " + (sectionIndex + 2)}
                             onClick={() => {
                                 insert(
-                                    { name: "Child " + (sectionIndex + 1) },
+                                    { name: "Child " + (item.children().length + 1) },
                                     original[sectionIndex]
                                 );
                             }}
                         >
-                            {item
-                                .children()
-                                .map((child: WrappedItem<ColumnViewItem>, index: number) => {
-                                    return (
-                                        <div
-                                            {...child.buildProps()}
-                                            onClick={() => child.pushAt(sectionIndex + 1)}
-                                            className={classNames("p-2 hover:bg-gray-100", {
-                                                "bg-gray-200": child.isSelected
-                                            })}
-                                        >
-                                            {child?.name}.{index}
-                                        </div>
-                                    );
-                                })}
+                            {item.children().map((child: WrappedItem<ColumnViewItem>) => {
+                                return (
+                                    <div
+                                        {...child.buildProps()}
+                                        onClick={() => child.pushAt(sectionIndex + 1)}
+                                        className={classNames("p-2 hover:bg-gray-100", {
+                                            "bg-gray-200": child.isSelected
+                                        })}
+                                    >
+                                        {child?.name}
+                                    </div>
+                                );
+                            })}
                         </Section>
                     )
                 )}
