@@ -6,7 +6,7 @@ export type State<T> = {
 
 export type Action<T> =
     | { type: "insert"; item: T; parentId?: string }
-    | { type: "push" | "pop"; item: string; section?: number };
+    | { type: "push" | "pop" | "restore"; item: string; section?: number };
 
 export type ColumnItem<T> = {
     id: string;
@@ -25,6 +25,7 @@ export interface UseColumnViewHookResult<T> {
     root: CreateItemsPropsResult<T>;
     path: CreateItemsPropsResult<T>;
     insert: (item: T, parentId?: string) => void;
+    navigate: (itemId: string) => void;
 }
 
 export type MapCallback<T> = (

@@ -42,11 +42,14 @@ export const useColumnView = <T,>(
         [dispatch]
     );
 
-    // const pop = useCallback((item: string) => dispatch({type: "pop", item}), [dispatch]);
+    const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
+
+    const navigate = useCallback((item: string) => dispatch({ type: "restore", item }), [data]);
 
     return {
-        root: createItemsProps<T>(root, { push, path, data }),
-        path: createItemsProps<T>(path, { push, path, data }),
-        insert
+        root: createItemsProps<T>(root, { push, pop, path, data }),
+        path: createItemsProps<T>(path, { push, pop, path, data }),
+        insert,
+        navigate
     };
 };

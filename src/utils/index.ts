@@ -12,17 +12,35 @@ const getItem = <T>(id: string, data: Record<string, ColumnItem<T>>): T | undefi
 const getChildren = <T>(id: string, context: ViewContext<T>): CreateItemsPropsResult<T> =>
     createItemsProps<T>(context.data?.[id]?.children || [], context);
 
-type ViewContext<T> = { path: string[]; push: any; data: Record<string, ColumnItem<T>> };
+type ViewContext<T> = {
+    pop: any;
+    push: any;
+    path: string[];
+    data: Record<string, ColumnItem<T>>;
+};
+
+export const buildPath = <T>(
+    itemId: string,
+    data: Record<string, ColumnItem<T>>,
+    path?: string[]
+): string[] => {
+    const { parentId } = data[itemId] || { parentId: undefined };
+
+    if (parentId) {
+        return buildPath(parentId, data, [itemId, ...(path || [])]);
+    }
+
+    return [itemId, ...(path || [])];
+};
 
 export const createItemProps = <T>(id: string, context: ViewContext<T>): WrappedItem<T> => {
     const { data, push, path } = context;
     const item = getItem(id, data);
 
     Object.assign(item, {
-        //data: () => item,
         isSelected: path.includes(id),
         children: () => getChildren(id, context),
-        pushAt: (atSection: number) => push(id, atSection),
+        pushAt: (section: number) => push(id, section),
         buildProps: (additional?: object) => ({
             ...additional,
             key: id

@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import _ from "lodash";
 import { Action, State } from "../types";
+import { buildPath } from "../utils";
 
 export const createReducer = <T = unknown>() => {
     return function reducer(state: State<T>, action: Action<T>): State<T> {
@@ -53,6 +54,12 @@ export const createReducer = <T = unknown>() => {
                 return {
                     ...state,
                     path: [...state.path]
+                };
+            case "restore":
+                const path = buildPath(action.item, state.data);
+                return {
+                    ...state,
+                    path
                 };
             default:
                 return state;
