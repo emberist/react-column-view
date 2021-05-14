@@ -1,6 +1,6 @@
 {
     "name": "react-column-view",
-    "version": "rc_v0.0.1-alpha.3",
+    "version": "0.0.1-alpha.3",
     "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
