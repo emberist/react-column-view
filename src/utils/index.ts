@@ -17,8 +17,9 @@ type ViewContext<T> = { path: string[]; push: any; data: Record<string, ColumnIt
 export const createItemProps = <T>(id: string, context: ViewContext<T>): WrappedItem<T> => {
     const { data, push, path } = context;
     const item = getItem(id, data);
-    return {
-        data: () => item,
+
+    Object.assign(item, {
+        //data: () => item,
         isSelected: path.includes(id),
         children: () => getChildren(id, context),
         pushAt: (atSection: number) => push(id, atSection),
@@ -26,7 +27,19 @@ export const createItemProps = <T>(id: string, context: ViewContext<T>): Wrapped
             ...additional,
             key: id
         })
-    };
+    });
+
+    return item as WrappedItem<T>;
+    // return {
+    //     //data: () => item,
+    //     isSelected: path.includes(id),
+    //     children: () => getChildren(id, context),
+    //     pushAt: (atSection: number) => push(id, atSection),
+    //     buildProps: (additional?: object) => ({
+    //         ...additional,
+    //         key: id
+    //     })
+    // };
 };
 
 export const createItemsProps = <T>(
@@ -34,6 +47,7 @@ export const createItemsProps = <T>(
     context: ViewContext<T>
 ): CreateItemsPropsResult<T> => {
     return {
+        original: ids,
         length: ids.length,
         includes: ids.includes,
         map: callbackFn =>

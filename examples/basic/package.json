@@ -18,8 +18,7 @@
         "start": "craco start",
         "build": "craco build",
         "test": "craco test",
-        "eject": "react-scripts eject",
-        "add:link": "npm link ../node_modules/react && npm link ../node_modules/react-dom"
+        "eject": "react-scripts eject"
     },
     "eslintConfig": {
         "extends": [

@@ -34,16 +34,16 @@ export type MapCallback<T> = (
 ) => any | void;
 
 export type CreateItemsPropsResult<T> = {
+    original: string[];
     map: (callback: MapCallback<T>) => CreateItemsPropsResult<T>[];
     forEach: (callback: MapCallback<T>) => void;
     includes: (item: any) => boolean;
     length: number;
 };
 
-export type WrappedItem<T> = {
+export type WrappedItem<TInstance extends {}> = TInstance & {
     isSelected?: boolean;
-    data: () => T | undefined;
     pushAt: (section: number) => void;
-    children: () => CreateItemsPropsResult<T>;
+    children: () => CreateItemsPropsResult<TInstance>;
     buildProps: (additional?: object) => { key: string };
 };
