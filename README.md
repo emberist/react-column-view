@@ -1,4 +1,4 @@
-# React Column View
+![React Column View Cover](https://github.com/riccardocaranfil/react-column-view/tree/main/media/cover.gif)
 
 Hooks for **easily** creating column views / file system trees in React
 
