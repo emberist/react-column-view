@@ -2,3 +2,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn {
+    @apply px-4 py-1 mr-2 text-sm text-purple-600 font-semibold rounded-full border disabled:opacity-50 border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2;
+}
+
+.input {
+    @apply px-3 mr-2 h-full relative bg-white rounded text-sm border outline-none focus:outline-none focus:ring;
+}
+
+.cover {
+    @apply bg-gradient-to-r from-green-400 to-blue-500 h-screen w-screen flex flex-col items-center justify-center;
+}

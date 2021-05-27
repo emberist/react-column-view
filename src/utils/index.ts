@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 import {
     ColumnItem,
     CreateItemsPropsResult,
@@ -5,6 +7,7 @@ import {
     UseColumnViewHookOptions,
     WrappedItem
 } from "../types";
+import { DEFAULT_CHILDREN_ACCESSOR, DEFAULT_PARENT_ACCESSOR } from "./config";
 
 const getItem = <T>(id: string, data: Record<string, ColumnItem<T>>): T | undefined =>
     data?.[id]?.data;
@@ -48,16 +51,6 @@ export const createItemProps = <T>(id: string, context: ViewContext<T>): Wrapped
     });
 
     return item as WrappedItem<T>;
-    // return {
-    //     //data: () => item,
-    //     isSelected: path.includes(id),
-    //     children: () => getChildren(id, context),
-    //     pushAt: (atSection: number) => push(id, atSection),
-    //     buildProps: (additional?: object) => ({
-    //         ...additional,
-    //         key: id
-    //     })
-    // };
 };
 
 export const createItemsProps = <T>(
@@ -80,22 +73,32 @@ export const buildOptions = <T>(options?: UseColumnViewHookOptions<T>): State<T>
         return undefined;
     }
 
-    let data = {};
+    const wrapped = options.initialValues?.map((item: any) => {
+        const internalId = uuid();
+        return {
+            ...item,
+            id: item.id,
+            parent: item[options.parentAccessor || DEFAULT_PARENT_ACCESSOR],
+            children: item[options.childrenAccessor || DEFAULT_CHILDREN_ACCESSOR],
+            internalId
+        };
+    });
 
-    // TODO
-    // options.initialValues?.forEach((item) => {
-    //     const id = uuid();
-    //     data[item] = {
-    //         id,
-    //         children: [],
-    //         parentId: action.parentId,
-    //         data: _.omit(action.item, "id") as T
-    //     };
-    // });
+    const finalData = wrapped?.map((item: any) => {
+        return {
+            id: item.internalId,
+            children: item.children?.map((id: any) => wrapped.find(i => i.id === id).internalId),
+            parent: wrapped.find(i => i.id === item.parent)?.internalId,
+            data: item
+        };
+    });
 
     return {
         path: options.path || [],
-        root: [],
-        data
+        root: finalData?.filter(i => !i.parent)?.map(i => i.id) || [],
+        data: finalData?.reduce((result: any, item) => {
+            result[item.id] = item;
+            return result;
+        }, {})
     };
 };

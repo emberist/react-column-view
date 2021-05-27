@@ -5,15 +5,48 @@ import { useColumnView, WrappedItem } from "react-column-view";
 import Button from "./Button";
 
 type ColumnViewItem = {
-    id?: string;
+    id?: number;
     name: string;
+    parent?: number;
+    children?: number[];
 };
 
 const ColumnView = () => {
     const [name, setName] = useState<string>();
-    const [search, setSearch] = useState<string>();
 
-    const { insert, root, path, navigate } = useColumnView<ColumnViewItem>();
+    const initialValues: ColumnViewItem[] = useMemo(
+        () => [
+            {
+                id: 1,
+                name: "Photos",
+                children: [2, 7]
+            },
+            {
+                id: 2,
+                parent: 1,
+                name: "Holidays"
+            },
+            {
+                id: 7,
+                parent: 1,
+                name: "High school"
+            },
+            {
+                id: 10,
+                name: "Work",
+                children: [22]
+            },
+            {
+                id: 22,
+                parent: 10,
+                name: "Documents"
+            }
+        ],
+        []
+    );
+    const { insert, root, path } = useColumnView<ColumnViewItem>({
+        initialValues
+    });
 
     return (
         <div
