@@ -4,13 +4,16 @@
     "private": true,
     "dependencies": {
         "@craco/craco": "^6.1.2",
+        "@reduxjs/toolkit": "^1.6.0",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
         "react": "link:../../node_modules/react",
         "react-column-view": "link:../../",
         "react-dom": "link:../../node_modules/react-dom",
+        "react-redux": "link:../../node_modules/react-redux",
         "react-scripts": "^4.0.3",
+        "redux": "link:../../node_modules/redux",
         "typescript": "^4.1.2",
         "web-vitals": "^1.0.1"
     },

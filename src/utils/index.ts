@@ -88,14 +88,14 @@ export const buildOptions = <T>(options?: UseColumnViewHookOptions<T>): State<T>
         return {
             id: item.internalId,
             children: item.children?.map((id: any) => wrapped.find(i => i.id === id).internalId),
-            parent: wrapped.find(i => i.id === item.parent)?.internalId,
+            parentId: wrapped.find(i => i.id === item.parent)?.internalId,
             data: item
         };
     });
 
     return {
         path: options.path || [],
-        root: finalData?.filter(i => !i.parent)?.map(i => i.id) || [],
+        root: finalData?.filter(i => !i.parentId)?.map(i => i.id) || [],
         data: finalData?.reduce((result: any, item) => {
             result[item.id] = item;
             return result;

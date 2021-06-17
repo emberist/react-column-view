@@ -5,27 +5,23 @@
  * Created by Riccardo Caranfil on 05/05/21
  */
 
-import { useCallback, useReducer } from "react";
-
-import { createReducer } from "../core/reducer";
+import { useCallback, useEffect } from "react";
 import { buildOptions, createItemsProps } from "../utils";
 import { State, UseColumnViewHookOptions, UseColumnViewHookResult } from "../types";
-
-const INITIAL_STATE: State<any> = {
-    path: [],
-    root: [],
-    data: {}
-};
+import { useDispatch, useSelector } from "react-redux";
 
 export const useColumnView = <T,>(
     options?: UseColumnViewHookOptions<T>
 ): UseColumnViewHookResult<T> => {
-    const stateReducer = createReducer<T>();
+    const dispatch = useDispatch();
+    const { root, data, path } = useSelector<any, State<T>>(s => s.column as State<T>);
 
-    const [{ root, data, path }, dispatch] = useReducer(
-        stateReducer,
-        buildOptions(options) || INITIAL_STATE
-    );
+    useEffect(() => {
+        if (options?.initialValues) {
+            const state = buildOptions(options);
+            dispatch({ type: "init", state });
+        }
+    }, []);
 
     const insert = useCallback(
         (item: T, parentId?: string) =>
@@ -44,7 +40,7 @@ export const useColumnView = <T,>(
 
     const pop = useCallback((item: string) => dispatch({ type: "pop", item }), [dispatch]);
 
-    const navigate = useCallback((item: string) => dispatch({ type: "restore", item }), [data]);
+    const navigate = useCallback((item: string) => dispatch({ type: "restore", item }), [dispatch]);
 
     return {
         root: createItemsProps<T>(root, { push, pop, path, data }),

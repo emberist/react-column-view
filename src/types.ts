@@ -5,6 +5,7 @@ export type State<T> = {
 };
 
 export type Action<T> =
+    | { type: "init"; state: State<T> }
     | { type: "insert"; item: T; parentId?: string }
     | { type: "push" | "pop" | "restore"; item: string; section?: number };
 
