@@ -20,6 +20,24 @@ Or with `npm` running
 
 ### Usage
 
+In order to use the library you will need to install redux as follow
+  
+ yarn add redux react-redux
+
+Then add the library reducer in your `redux store`
+
+    import { combineReducers, createStore } from "redux";
+    import { reducer as column } from "react-column-view";
+
+    const reducers = {
+        column,
+        // ... Other reducers
+    };
+
+    const rootReducer = combineReducers(reducers);
+
+    const store = createStore(rootReducer);
+
 Use the main hook in this way
 
     const { insert, root, path } = useColumnView();
