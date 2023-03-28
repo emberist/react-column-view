@@ -6,10 +6,10 @@ export type State<Data extends Record<string, unknown>> = {
   data: Record<string, ColumnItem<Data>>;
 };
 
-export type InitialState = {
+export type InitialState = (Record<string, unknown> & {
   id: string;
   children: string[];
-}[];
+})[];
 
 export type Action<Data extends Record<string, unknown>> =
   | { type: 'insert'; item: Data; parentId?: string }

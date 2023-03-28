@@ -1,17 +1,12 @@
 import { useCallback, useMemo, useReducer } from 'react';
 import { createReducer } from './redux';
 import { InitialState } from './types';
+import { buildInitialState } from './utils/buildInitialState';
 import { createItemsProps } from './utils/createItemsProps';
-
-const INITIAL_STATE = {
-  path: [],
-  root: [],
-  data: {},
-};
 
 export type Param = {
   path?: string[];
-  initialState?: InitialState;
+  initialState: InitialState;
 };
 
 export const useColumnView = <T extends Record<string, unknown>>(
@@ -21,7 +16,8 @@ export const useColumnView = <T extends Record<string, unknown>>(
 
   const [{ root, data, path }, dispatch] = useReducer(
     stateReducer,
-    INITIAL_STATE
+    options?.initialState ?? [],
+    buildInitialState
   );
 
   const selectNode = useCallback(
