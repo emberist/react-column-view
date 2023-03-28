@@ -6,7 +6,7 @@ Hooks for **easily** creating column views / file system trees in React
 
 ### Demo
 
-Check out the main [demo](https://reactcolumnviewexample.netlify.app/) and the [development demo](https://reactcolumnviewexample-dev.netlify.app)
+Check out the main [demo](https://reactcolumnviewexample.netlify.app/)
 
 ### Installing
 
