@@ -1,4 +1,4 @@
-import * as invariant from 'invariant';
+import invariant from 'invariant';
 import { ColumnItem, ViewContext, WrappedItem } from '../../types';
 import { createItemsProps } from '../createItemsProps';
 

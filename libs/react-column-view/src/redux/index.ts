@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { values } from 'lodash';
 import { Reducer } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Action, State } from '../types';
@@ -38,11 +38,9 @@ export const createReducer = <
 
         return {
           ...state,
-          root: _(data)
-            .values()
+          root: values(data)
             .filter((i) => i && !i.parentId)
-            .map((i) => i.id)
-            .valueOf(),
+            .map((i) => i.id),
           data,
         };
       }
