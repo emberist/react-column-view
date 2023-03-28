@@ -1,0 +1,47 @@
+{
+  "name": "react-column-view",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/react-column-view/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/react-column-view",
+        "main": "libs/react-column-view/src/index.ts",
+        "tsConfig": "libs/react-column-view/tsconfig.lib.json",
+        "assets": ["libs/react-column-view/*.md"]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs react-column-view {args.ver} {args.tag}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/react-column-view/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/react-column-view/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

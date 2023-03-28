@@ -1,5 +1,4 @@
-**/node_modules
-**/yarn.lock
-**/dist
-**/build
-**/tsconfig.json
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage

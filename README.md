@@ -1,4 +1,4 @@
-![React Column View Cover](https://github.com/riccardocaranfil/react-column-view/raw/main/media/cover.gif)
+![React Column View Cover](https://github.com/emberist/react-column-view/raw/main/media/cover.gif)
 
 Hooks for **easily** creating column views / file system trees in React
 
@@ -6,7 +6,7 @@ Hooks for **easily** creating column views / file system trees in React
 
 ### Demo
 
-Check out the main [demo](https://reactcolumnviewexample.netlify.app/) and the [development demo](https://reactcolumnviewexample-dev.netlify.app)
+Check out the main [demo](https://reactcolumnviewexample.netlify.app/)
 
 ### Installing
 
@@ -22,7 +22,7 @@ Or with `npm` running
 
 Use the main hook in this way
 
-    const { insert, root, path } = useColumnView();
+    const { insert, root, path, select } = useColumnView();
 
 ## :warning: Contributing
 
