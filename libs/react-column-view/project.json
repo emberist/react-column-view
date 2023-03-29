@@ -11,7 +11,7 @@
         "outputPath": "dist/libs/react-column-view",
         "main": "libs/react-column-view/src/index.ts",
         "tsConfig": "libs/react-column-view/tsconfig.lib.json",
-        "assets": ["libs/react-column-view/*.md"]
+        "assets": ["*.md"]
       }
     },
     "publish": {
