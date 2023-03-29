@@ -1,5 +1,9 @@
 {
   "name": "react-column-view",
   "version": "0.0.1",
-  "type": "commonjs"
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emberist/react-column-view.git"
+  }
 }
