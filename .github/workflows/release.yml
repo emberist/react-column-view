@@ -1,7 +1,9 @@
 name: ci
 'on':
-  release:
-    types: [published]
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 jobs:
   deploy-production:
@@ -9,6 +11,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       - uses: actions/setup-node@v3
         with:
@@ -26,8 +31,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn semantic-release
-
-      - name: Publish package to NPM 📦
-        run: npm publish ./dist/libs/react-column-view
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

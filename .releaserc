@@ -1,5 +1,13 @@
 {
   "branches": [
     "main"
+  ],
+  "plugins": [
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "./dist/libs/react-column-view"
+      }
+    ]
   ]
 }
