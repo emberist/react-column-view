@@ -1,16 +1,26 @@
 import { omit, values } from 'lodash';
-import { ColumnItem, InitialState, State } from '../../types';
+import { InitialState, Item, State } from '../../types';
 
 export const buildInitialState = <T extends Record<string, unknown>>(
-  nodes: InitialState
+  initialNodes?: InitialState
 ): State<T> => {
-  const data = nodes.reduce((acc: Record<string, ColumnItem<T>>, item) => {
-    const parentId = nodes.find((node) => node.children.includes(item.id))?.id;
+  if (!initialNodes) {
+    return {
+      nodes: {},
+      path: [],
+      root: [],
+    };
+  }
+
+  const nodes = initialNodes.reduce((acc: Record<string, Item<T>>, item) => {
+    const parentId = initialNodes.find((node) =>
+      node.children.includes(item.id)
+    )?.id;
 
     acc[item.id] = {
       ...item,
       parentId,
-      data: omit(item, ['children']) as unknown as T,
+      original: omit(item, ['children']) as unknown as T,
     };
 
     return acc;
@@ -18,9 +28,9 @@ export const buildInitialState = <T extends Record<string, unknown>>(
 
   return {
     path: [],
-    root: values(data)
+    root: values(nodes)
       .filter((node) => !node.parentId)
       .map((node) => node.id),
-    data,
+    nodes,
   };
 };

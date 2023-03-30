@@ -2,8 +2,22 @@
   "name": "react-column-view",
   "version": "0.0.1",
   "type": "commonjs",
+  "description": "A React hooks library for creating a customizable column/tree view explorer component",
   "repository": {
     "type": "git",
     "url": "https://github.com/emberist/react-column-view.git"
-  }
+  },
+  "keywords": [
+    "column-view",
+    "column",
+    "explorer",
+    "file-explorer",
+    "file-structure",
+    "file-tree",
+    "file",
+    "react",
+    "structre",
+    "tree",
+    "view"
+  ]
 }
