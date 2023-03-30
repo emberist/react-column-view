@@ -1,11 +1,11 @@
 name: ci
 'on':
-  push:
+  pull_request:
     branches:
       - main
 
 jobs:
-  release:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -22,11 +22,8 @@ jobs:
       - name: Install deps
         run: yarn --immutable
 
-      - name: Build library
-        run: yarn nx build react-column-view
+      - name: Lint
+        run: yarn nx affected --target=lint
 
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn semantic-release
+      - name: Test
+        run: yarn nx affected --target=test
