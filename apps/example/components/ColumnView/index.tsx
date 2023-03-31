@@ -13,11 +13,13 @@ export type ColumnViewItem = {
 
 type Props = {
   initialState?: InitialState;
+  initialPath?: string[];
 };
 
-const ColumnView = ({ initialState }: Props) => {
+const ColumnView = ({ initialState, initialPath }: Props) => {
   const [{ insert, root, path, select }] = useColumnView<ColumnViewItem>({
     initialState,
+    path: initialPath,
   });
 
   const handleEvent = useCallback(

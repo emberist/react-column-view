@@ -26,6 +26,14 @@ export function Index() {
         >
           Initial values Example
         </Button>
+
+        <Button
+          onClick={() => {
+            push('/with-initial-values-and-path');
+          }}
+        >
+          Initial values and path Example
+        </Button>
       </div>
     </div>
   );

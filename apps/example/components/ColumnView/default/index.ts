@@ -34,4 +34,9 @@ export const initialValues = [
   },
 ];
 
+export const initialPath = [
+  '633431fa-ef2c-4d05-a032-a651f7fcfa22',
+  '4428803c-43ec-4cff-877e-119bd21d4316',
+];
+
 export type InitialState = typeof initialValues;
