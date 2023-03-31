@@ -1,32 +1,35 @@
 import invariant from 'invariant';
-import { ColumnItem, ViewContext, WrappedItem } from '../../types';
-import { createItemsProps } from '../createItemsProps';
+import { Item, ViewContext, WrappedItem } from '../../types';
+import { buildSection } from '../buildSection';
 
-const getItem = <Data extends Record<string, unknown>>(
+const getItemData = <Data extends Record<string, unknown>>(
   id: string,
-  items: Record<string, ColumnItem<Data>>
-): Data | null => items?.[id]?.data ?? null;
+  items: Record<string, Item<Data>>
+): Data | null => items?.[id]?.original ?? null;
 
 const getChildren = <Data extends Record<string, unknown>>(
   id: string,
   context: ViewContext<Data>
-) => createItemsProps<Data>(context.data?.[id]?.children || [], context);
+) => buildSection(context.nodes?.[id]?.children || [], context);
 
 export const createItemProps = <Data extends Record<string, unknown>>(
   id: string,
+  _: number,
   context: ViewContext<Data>
 ): WrappedItem<Data> => {
-  const { data, push, path } = context;
-  const item = getItem(id, data);
+  const { nodes, push, path } = context;
+
+  const item = getItemData(id, nodes);
 
   invariant(item, `Item with id ${id} not found`);
 
   return {
-    ...item,
+    children: getChildren(id, context),
     id,
-    data: () => item,
     isSelected: path.includes(id),
-    children: () => getChildren(id, context),
-    pushAt: (atSection: number) => push(id, atSection),
+    original: item,
+    pushAt: (sectionIndex) => {
+      push(id, sectionIndex);
+    },
   };
 };

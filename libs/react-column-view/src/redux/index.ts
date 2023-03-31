@@ -1,96 +1,80 @@
+import type { Draft, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { values } from 'lodash';
-import { Reducer } from 'react';
 import { v4 as uuid } from 'uuid';
-import { Action, State } from '../types';
+import type { State } from '../types';
 
-type ColumnViewReducer<Data extends Record<string, unknown>> = Reducer<
-  State<Data>,
-  Action<Data>
->;
+export const createMainSlice = <T extends Record<string, unknown>>() => {
+  const initialState: State<T> = {
+    root: [],
+    path: [],
+    nodes: {},
+  };
 
-export const createReducer = <
-  T extends Record<string, unknown>
->(): ColumnViewReducer<T> => {
-  return function reducer(state, action) {
-    switch (action.type) {
-      case 'insert': {
+  return createSlice({
+    name: 'main',
+    initialState,
+    reducers: {
+      insertItem: (
+        state,
+        action: PayloadAction<{ item: T; parentId?: string }>
+      ) => {
         const id = uuid();
 
-        const data = {
-          ...state.data,
-          [id]: {
-            id,
-            children: [],
-            parentId: action.parentId,
-            data: {
-              ...action.item,
-              id,
-            },
-          },
+        const { item, parentId } = action.payload;
+
+        state.nodes[id] = {
+          id,
+          parentId,
+          children: [],
+          original: { ...item, id } as unknown as Draft<T>,
         };
 
-        if (action.parentId) {
-          data[action.parentId] = {
-            ...data[action.parentId],
-            children: [...(data[action.parentId]?.children || []), id],
-          };
+        if (parentId) {
+          state.nodes[parentId].children.push(id);
         }
 
-        return {
-          ...state,
-          root: values(data)
-            .filter((i) => i && !i.parentId)
-            .map((i) => i.id),
-          data,
-        };
-      }
-      case 'push': {
+        state.root = values(state.nodes)
+          .filter((i) => i && !i.parentId)
+          .map((i) => i.id);
+      },
+      push: (
+        state,
+        action: PayloadAction<{ section: number; itemId: string }>
+      ) => {
+        const { section, itemId } = action.payload;
+
         const currentPath = state.path;
 
-        if (action.section !== undefined && currentPath[action.section]) {
-          currentPath.splice(action.section, 1, action.item);
-          currentPath.splice(
-            action.section + 1,
-            currentPath.length - action.section
-          );
+        if (section !== undefined && currentPath[section]) {
+          currentPath.splice(section, 1, itemId);
+          currentPath.splice(section + 1, currentPath.length - section);
         } else {
-          currentPath.push(action.item);
+          currentPath.push(itemId);
         }
 
-        return {
-          ...state,
-          path: [...currentPath],
-        };
-      }
-      case 'select': {
-        const newPath = [action.item.id];
+        state.path = currentPath;
+      },
+      select: (state, action: PayloadAction<{ itemId: string }>) => {
+        const { itemId } = action.payload;
 
-        if (action.item.parentId) {
-          let parentId = action.item.parentId;
+        const item = state.nodes[itemId];
+
+        const newPath = [item.id];
+
+        if (item.parentId) {
+          let parentId = item.parentId;
 
           while (parentId !== '') {
-            const node = state.data[parentId];
+            const node = state.nodes[parentId];
+
             newPath.push(node.id);
             parentId = node.parentId || '';
           }
         }
 
-        console.log({ newPath });
-
-        return {
-          ...state,
-          path: newPath.reverse(),
-        };
-      }
-      case 'pop':
-        state.path.pop();
-
-        return {
-          ...state,
-          path: [...state.path],
-        };
-      default:
-        return state;
-    }
-  };
+        state.path = newPath.reverse();
+      },
+    },
+  });
 };

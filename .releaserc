@@ -6,7 +6,19 @@
     [
       "@semantic-release/npm",
       {
-        "pkgRoot": "./dist/libs/react-column-view"
+        "pkgRoot": "dist/libs/react-column-view"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": [
+              "dist/libs/react-column-view"
+            ]
+          }
+        ]
       }
     ]
   ]
