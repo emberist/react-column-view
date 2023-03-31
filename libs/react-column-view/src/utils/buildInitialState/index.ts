@@ -2,7 +2,8 @@ import { omit, values } from 'lodash';
 import { InitialState, Item, State } from '../../types';
 
 export const buildInitialState = <T extends Record<string, unknown>>(
-  initialNodes?: InitialState
+  initialNodes?: InitialState,
+  initialPath?: string[]
 ): State<T> => {
   if (!initialNodes) {
     return {
@@ -27,7 +28,7 @@ export const buildInitialState = <T extends Record<string, unknown>>(
   }, {});
 
   return {
-    path: [],
+    path: initialPath ?? [],
     root: values(nodes)
       .filter((node) => !node.parentId)
       .map((node) => node.id),

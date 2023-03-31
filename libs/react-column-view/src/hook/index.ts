@@ -13,6 +13,8 @@ type Param = {
 export const useColumnView = <T extends Record<string, unknown>>(
   options?: Param
 ) => {
+  const { path: initialPath, initialState } = options || {};
+
   const { reducer: stateReducer, actions } = useMemo(
     () => createMainSlice<T>(),
     []
@@ -20,8 +22,7 @@ export const useColumnView = <T extends Record<string, unknown>>(
 
   const [{ root, nodes, path }, dispatch] = useReducer(
     stateReducer,
-    options?.initialState ?? [],
-    buildInitialState
+    buildInitialState<T>(initialState ?? [], initialPath)
   );
 
   const select = useCallback(
